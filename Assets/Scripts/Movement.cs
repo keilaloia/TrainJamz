@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Movement : MonoBehaviour {
 
     // Use this for initialization
+
+    public UnityEvent OnDead;
 
     public float speed;
     private Rigidbody RB;
@@ -14,7 +17,7 @@ public class Movement : MonoBehaviour {
     public float JumpHeight;
     private float horz;
     private float vert;
-
+    public int health = 2;
 
     public bool isGrounded
     {
@@ -91,6 +94,21 @@ public class Movement : MonoBehaviour {
         {
             RB.AddForce(Physics.gravity * RB.mass * 1.5f);
             Debug.Log("being called");
+        }
+    }
+
+    public void takeDamage(int damageTaken)
+    {
+        health -= damageTaken;
+        healthManager();
+    }
+
+    void healthManager()
+    {
+        if(health <= 0)
+        {
+            OnDead.Invoke();
+            Debug.Log("lose");
         }
     }
 }

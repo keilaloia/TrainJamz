@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CannonCollision : MonoBehaviour {
 
-    private int damage;
+    private int damage = 1;
     private Rigidbody thisRb;
-
+    
     void Awake()
     {
         thisRb = GetComponent<Rigidbody>();
@@ -18,7 +18,11 @@ public class CannonCollision : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         Rigidbody check = collision.collider.GetComponent<Rigidbody>();
-       
+        var durp = collision.gameObject.GetComponent<Movement>();
+        if(durp != null)
+        {
+            durp.takeDamage(damage);
+        }
         Destroy(gameObject);
 
       
